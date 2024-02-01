@@ -6,6 +6,7 @@ interface ValidationResult {
   value: any;
   error: string | null;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  validate: () => void;
 }
 
 const useValidation = <T>(
@@ -22,7 +23,11 @@ const useValidation = <T>(
     setError(validationRule && !validationRule(newValue) ? errorMessage : null);
   };
 
-  return { value, error, handleChange };
+  const validate = () => {
+    setError(validationRule && !validationRule(value) ? errorMessage : null);
+  };
+
+  return { value, error, handleChange, validate };
 };
 
 export default useValidation;
